@@ -76,6 +76,7 @@ call plug#begin('~/.config/nvim/plugged')
     set updatetime=300
     set signcolumn=yes
     set shortmess+=c
+    set relativenumber
 
     " Tab control
     set smarttab " tab respects 'tabstop', 'shiftwidth', and 'softtabstop'
@@ -127,7 +128,7 @@ call plug#begin('~/.config/nvim/plugged')
         Plug 'itchyny/lightline.vim'
         Plug 'nicknisi/vim-base16-lightline'
         let g:lightline = {
-            \   'colorscheme': 'base16',
+            \   'colorscheme': 'solarized',
             \   'active': {
             \       'left': [ [ 'mode', 'paste' ],
             \               [ 'gitbranch' ],
@@ -517,7 +518,8 @@ call plug#begin('~/.config/nvim/plugged')
         \ 'coc-prettier',
         \ 'coc-ultisnips',
         \ 'coc-explorer',
-        \ 'coc-diagnostic'
+        \ 'coc-diagnostic',
+        \ 'coc-python'
         \ ]
 
         autocmd CursorHold * silent call CocActionAsync('highlight')
@@ -686,3 +688,46 @@ call plug#end()
 " }}}
 
 " vim:set foldmethod=marker foldlevel=0
+"
+" Python {{{
+    Plug 'psf/black'
+    " let g:python_host_prog = expand('$VIRTUAL_ENV/bin/python')
+    " let g:python3_host_prog = expand('$VIRTUAL_ENV/bin/python')
+
+    " Plug 'python-mode/python-mode', { 'for': 'python' }
+    " " Async autocompletion
+    " Plug 'Shougo/deoplete.nvim'
+    " " Python autocompletion
+    " Plug 'deoplete-plugins/deoplete-jedi'
+    " " Completion from other opened files
+    " Plug 'Shougo/context_filetype.vim'
+    " Just to add the python go-to-definition and similar features, autocompletion
+    " from this plugin is disabled
+    " Plug 'davidhalter/jedi-vim'
+
+    " " Deoplete -----------------------------
+
+    " " Use deoplete.
+    " let g:deoplete#enable_at_startup = 1
+    " let g:deoplete#enable_ignore_case = 1
+    " let g:deoplete#enable_smart_case = 1
+    " " complete with words from any opened file
+    " let g:context_filetype#same_filetypes = {}
+    " let g:context_filetype#same_filetypes._ = '_'
+
+    " Jedi-vim ------------------------------
+
+    " " Disable autocompletion (using deoplete instead)
+    " let g:jedi#completions_enabled = 0
+
+    " " All these mappings work only for python code:
+    " " Go to definition
+    " let g:jedi#goto_command = ',d'
+    " " Find ocurrences
+    " let g:jedi#usages_command = ',o'
+    " " Find assignments
+    " let g:jedi#goto_assignments_command = ',a'
+    " let g:jedi#rename_command = ",rc"
+    " " Go to definition in new tab
+    " nmap ,D :tab split<CR>:call jedi#goto()<CR>
+" }}}

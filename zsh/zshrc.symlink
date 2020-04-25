@@ -39,10 +39,10 @@ autoload -U compinit add-zsh-hook
 compinit
 
 # prepend_path $HOME/npmbin/node_modules/.bin
-prepend_path /usr/local/opt/grep/libexec/gnubin
-prepend_path /usr/local/sbin
-prepend_path $DOTFILES/bin
-prepend_path $HOME/bin
+# prepend_path /usr/local/opt/grep/libexec/gnubin
+# prepend_path /usr/local/sbin
+# prepend_path $DOTFILES/bin
+# prepend_path $HOME/bin
 
 # define the code directory
 # This is where my code exists and where I want the `c` autocomplete to work from exclusively
@@ -210,3 +210,131 @@ alias ta='tmux attach'
 alias tls='tmux ls'
 alias tat='tmux attach -t'
 alias tns='tmux new-session -s'
+
+alias dws="cd ~/Documents/Workspace/code"
+alias ws="cd ~/Workspace/code"
+
+alias murucutu="ssh root@192.155.93.236"
+alias jacurutu="ssh root@178.128.149.206"
+
+alias tunel="./ngrok http"
+
+alias manage='python $VIRTUAL_ENV/../manage.py'
+alias nb="manage shell_plus --notebook"
+alias run='python $VIRTUAL_ENV/../manage.py runserver'
+alias runs='stunnel stunnel/dev_https & python $VIRTUAL_ENV/../manage.py runserver & HTTPS=1 python $VIRTUAL_ENV/../manage.py runserver 8001'
+
+alias rmmigrations='find . -path "*/migrations/*.py" -not -name "__init__.py" -delete'
+alias rmmigrationscache='find . -path "*/migrations/*.pyc"  -delete'
+
+alias android="/Users/klebersoares/Library/Android/sdk/emulator/emulator -avd Nexus_5X_API_28 -netdelay none -netspeed full -dns-server 8.8.8.8"
+
+alias worknow="./cli/start_work.sh"
+alias reviewnow="./cli/start_review.sh"
+
+alias gitbr="git branch -r | grep -v '\->' | while read remote; do git branch --track "${remote#origin/}" "$remote"; done"
+
+# ionic
+alias ionicbuildprod="cross-env ENV='prod' ionic cordova build"
+alias ionicbuilddev="cross-env ENV='dev' ionic cordova build"
+alias ionicserveprod="cross-env ENV='prod' ionic serve"
+alias ionicservedev="cross-env ENV='dev' ionic serve"
+alias ionicruniosprod="cross-env ENV='prod' ionic cordova run ios -c -l -s"
+alias ionicruniosdev="cross-env ENV='dev' ionic cordova run ios -c -l -s"
+alias ionicrunandroidprod="cross-env ENV='prod' ionic cordova run android -c -l -s"
+alias ionicrunandroiddev="cross-env ENV='dev' ionic cordova run android -c -l -s"
+alias ionicclean="ionic cordova platform rm ios; ionic cordova platform rm android; ionic cordova plugin rm cordova-sqlite-storage; npm i cordova-sqlite-storage@latest && ionic cordova plugin add cordova-sqlite-storage; ionic cordova platform add ios; ionic cordova platform add android"
+
+# pyenv venv
+function _eac {
+  pyenv activate $*;
+}
+alias eac="_eac"
+alias ede="pyenv deactivate"
+###################################
+
+# Make, Activate venv
+function _venvmk {
+  python -m venv $*;
+}
+alias venvmk=_venvmk
+
+function _venvac {
+  source $*/bin/activate;
+}
+alias venvac=_venvac
+alias venvde="deactivate"
+
+########################################################
+# PATH
+########################################################
+
+export PATH="/usr/local/sbin:$PATH"
+
+export PATH="/usr/local/opt/openssl/bin:$PATH"
+export LDFLAGS="-L/usr/local/opt/openssl/lib"
+export CPPFLAGS="-I/usr/local/opt/openssl/include"
+export PKG_CONFIG_PATH="/usr/local/opt/openssl/lib/pkgconfig"
+
+# export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
+# export LDFLAGS="-L/usr/local/opt/openssl@1.1/lib"
+# export CPPFLAGS="-I/usr/local/opt/openssl@1.1/include"
+# export PKG_CONFIG_PATH="/usr/local/opt/openssl@1.1/lib/pkgconfig"
+
+# export LDFLAGS="-L/usr/local/opt/zlib/lib"
+# export CPPFLAGS="-I/usr/local/opt/zlib/include"
+# export PKG_CONFIG_PATH="/usr/local/opt/zlib/lib/pkgconfig"
+
+export PATH="/usr/local/opt/sphinx-doc/bin:$PATH"
+
+export PATH="/usr/local/opt/sqlite/bin:$PATH"
+export PATH="/Users/klebersoares/development/flutter/bin:$PATH"
+export PATH="/Users/klebersoares/Library/Android/sdk/build-tools/28.0.3/zipalign:$PATH"
+export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_191.jdk/Contents/Home"
+export ANDROID_HOME="/Users/klebersoares/Library/Android/sdk"
+export PATH="$PATH:$ANDROID_HOME/emulator"
+export PATH="$PATH:$ANDROID_HOME/tools"
+export PATH="$PATH:$ANDROID_HOME/tools/bin"
+export PATH="$PATH:$ANDROID_HOME/platform-tools"
+
+# pyenv
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+
+if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
+
+# NVM
+export NVM_DIR="$HOME/.nvm"
+[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/usr/local/opt/nvm/etc/bash_completion" ] && . "/usr/local/opt/nvm/etc/bash_completion"  # This loads nvm bash_completion
+
+# heroku autocomplete setup
+HEROKU_AC_ZSH_SETUP_PATH=/Users/klebersoares/Library/Caches/heroku/autocomplete/zsh_setup && test -f $HEROKU_AC_ZSH_SETUP_PATH && source $HEROKU_AC_ZSH_SETUP_PATH;
+
+# export LANG=C
+export LANG="pt_BR.UTF-8"
+export LC_COLLATE="pt_BR.UTF-8"
+export LC_CTYPE="pt_BR.UTF-8"
+export LC_MESSAGES="pt_BR.UTF-8"
+export LC_MONETARY="pt_BR.UTF-8"
+export LC_NUMERIC="pt_BR.UTF-8"
+export LC_TIME="pt_BR.UTF-8"
+export LC_ALL="pt_BR.UTF-8"
+
+# NVIM=/usr/local/Cellar/neovim/0.3.8/bin/nvim make
+
+export PATH="/usr/local/opt/gettext/bin:$PATH"
+
+# export PATH="/Applications/Postgres.app/Contents/MacOS/bin:$PATH"
+export PATH="/usr/local/opt/postgresql@11/bin/:$PATH"
+
+export PATH="/usr/local/bin/pipenv:$PATH"
+export PIPENV_VENV_IN_PROJECT=1
+
+export GOROOT="/usr/local/go"
+export GOPATH="$HOME/Workspace/code/go"
+export PATH="$GOPATH/bin:$GOROOT/bin:$PATH"
+
+export PATH="$HOME/bin:$PATH"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

@@ -1,0 +1,2 @@
+[MESSAGES CONTROL]
+disable=W0221, too-few-public-methods, maybe-no-member, missing-docstring
