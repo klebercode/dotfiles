@@ -18,7 +18,8 @@ call plug#begin('~/.config/nvim/plugged')
     set autoread " detect when a file is changed
 
     set history=1000 " change history to 1000
-    set textwidth=120
+    " set textwidth=120
+    set textwidth=0
 
     set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
     set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
@@ -53,9 +54,12 @@ call plug#begin('~/.config/nvim/plugged')
 " }}}
 
 " Appearance {{{
+    set cursorline
     set number " show line numbers
-    set wrap " turn on line wrapping
-    set wrapmargin=8 " wrap lines when coming within n characters from side
+    set nowrap " turn on line wrapping
+    set formatoptions-=t
+    " set wrapmargin=8 " wrap lines when coming within n characters from side
+    set wrapmargin=0
     set linebreak " set soft wrapping
     set showbreak=… " show ellipsis at breaking
     set autoindent " automatically set indent of new line
@@ -123,10 +127,18 @@ call plug#begin('~/.config/nvim/plugged')
     " Load colorschemes
     Plug 'chriskempson/base16-vim'
     Plug 'joshdick/onedark.vim'
+    Plug 'ntk148v/vim-horizon'
+    Plug 'agude/vim-eldar'
+    Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
+    Plug 'kjssad/quantum.vim'
 
     " LightLine {{{
         Plug 'itchyny/lightline.vim'
         Plug 'nicknisi/vim-base16-lightline'
+        " \   'colorscheme': 'solarized',
+        " \   'colorscheme': 'horizon',
+        " \   'colorscheme': 'challenger_deep',
+        " \   'colorscheme': 'quantum',
         let g:lightline = {
             \   'colorscheme': 'solarized',
             \   'active': {
@@ -434,7 +446,9 @@ call plug#begin('~/.config/nvim/plugged')
     " FZF {{{
         Plug '/usr/local/opt/fzf'
         Plug 'junegunn/fzf.vim'
-        let g:fzf_layout = { 'down': '~25%' }
+        " let g:fzf_layout = { 'down': '~25%' }
+        let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.8 } }
+        let $FZF_DEFAULT_OPTS='--reverse'
 
         if isdirectory(".git")
             " if in a git project, use :GFiles
@@ -452,6 +466,9 @@ call plug#begin('~/.config/nvim/plugged')
         xmap <leader><tab> <plug>(fzf-maps-x)
         omap <leader><tab> <plug>(fzf-maps-o)
 
+        nnoremap <leader>pw :Rg <C-R>=expand("<cword>")<CR><CR>
+        nnoremap <Leader>ps :Rg<SPACE>
+        
         " Insert mode completion
         imap <c-x><c-k> <plug>(fzf-complete-word)
         imap <c-x><c-f> <plug>(fzf-complete-path)
@@ -519,7 +536,10 @@ call plug#begin('~/.config/nvim/plugged')
         \ 'coc-ultisnips',
         \ 'coc-explorer',
         \ 'coc-diagnostic',
-        \ 'coc-python'
+        \ 'coc-python',
+        \ 'coc-snippets',
+        \ 'coc-styled-components',
+        \ 'coc-highlight'
         \ ]
 
         autocmd CursorHold * silent call CocActionAsync('highlight')
@@ -535,6 +555,22 @@ call plug#begin('~/.config/nvim/plugged')
         nmap gu :CocCommand git.chunkUndo<cr>
 
         nmap <silent> <leader>k :CocCommand explorer<cr>
+
+        let g:coc_explorer_global_presets = {
+        \   'workspace': {
+        \      'root-uri': '~/Workspace/code',
+        \   },
+        \   'floating': {
+        \      'position': 'floating',
+        \   },
+        \ }
+
+        " Use preset argument to open it
+        nmap <leader>kd :CocCommand explorer --preset workspace<CR>
+        nmap <leader>kf :CocCommand explorer --preset floating<CR>
+
+        " List all presets
+        nmap <leader>kl :CocList explPresets
 
         "remap keys for gotos
         nmap <silent> gd <Plug>(coc-definition)
@@ -611,7 +647,7 @@ call plug#begin('~/.config/nvim/plugged')
         " pug / jade support
         Plug 'digitaltoad/vim-pug', { 'for': ['jade', 'pug'] }
 
-		" nunjucks support
+        " nunjucks support
         Plug 'Glench/Vim-Jinja2-Syntax', { 'for': 'njk' }
 
         " liquid support
@@ -622,9 +658,10 @@ call plug#begin('~/.config/nvim/plugged')
         Plug 'othree/yajs.vim', { 'for': [ 'javascript', 'javascript.jsx', 'html' ] }
         " Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'javascript.jsx', 'html'] }
         Plug 'moll/vim-node', { 'for': 'javascript' }
-		Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'javascript.jsx'], 'do': 'npm install' }
-		Plug 'MaxMEllon/vim-jsx-pretty'
-		let g:vim_jsx_pretty_highlight_close_tag = 1
+        Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'javascript.jsx'], 'do': 'npm install' }
+        Plug 'MaxMEllon/vim-jsx-pretty'
+        let g:vim_jsx_pretty_highlight_close_tag = 1
+        Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
     " }}}
 
     " TypeScript {{{
@@ -650,6 +687,11 @@ call plug#begin('~/.config/nvim/plugged')
         nmap <leader>m :MarkedOpen!<cr>
         nmap <leader>mq :MarkedQuit<cr>
         nmap <leader>* *<c-o>:%s///gn<cr>
+
+        " Kleber
+        " Opens the markdown in the browser
+        " Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
+        Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
     " }}}
 
     " JSON {{{
@@ -669,9 +711,13 @@ call plug#end()
         let base16colorspace=256
         source ~/.vimrc_background
     else
-        let g:onedark_termcolors=16
-        let g:onedark_terminal_italics=1
-        colorscheme onedark
+        " let g:onedark_termcolors=16
+        " let g:onedark_terminal_italics=1
+        " colorscheme onedark
+        " colorscheme eldar
+        " colorscheme horizon
+        " colorscheme challenger_deep
+        colorscheme quantum
     endif
     syntax on
     filetype plugin indent on
@@ -691,43 +737,32 @@ call plug#end()
 "
 " Python {{{
     Plug 'psf/black'
-    " let g:python_host_prog = expand('$VIRTUAL_ENV/bin/python')
-    " let g:python3_host_prog = expand('$VIRTUAL_ENV/bin/python')
+    Plug 'honza/vim-snippets'
+    " Plug 'tweekmonster/django-plus.vim'
+    " Plug 'damonkelley/django.vim'
+    Plug 'vim-python/python-syntax'
+    let g:python_highlight_all = 1
+" }}}
 
-    " Plug 'python-mode/python-mode', { 'for': 'python' }
-    " " Async autocompletion
-    " Plug 'Shougo/deoplete.nvim'
-    " " Python autocompletion
-    " Plug 'deoplete-plugins/deoplete-jedi'
-    " " Completion from other opened files
-    " Plug 'Shougo/context_filetype.vim'
-    " Just to add the python go-to-definition and similar features, autocompletion
-    " from this plugin is disabled
-    " Plug 'davidhalter/jedi-vim'
+" Kleber {{{
+    Plug 'hugolgst/vimsence'
+    Plug 'majutsushi/tagbar'
+    nmap <leader>j :TagbarToggle<CR>
 
-    " " Deoplete -----------------------------
+    nmap <leader>hd :set filetype=htmldjango<cr>
+    nmap <leader>ht :set filetype=html<cr>
 
-    " " Use deoplete.
-    " let g:deoplete#enable_at_startup = 1
-    " let g:deoplete#enable_ignore_case = 1
-    " let g:deoplete#enable_smart_case = 1
-    " " complete with words from any opened file
-    " let g:context_filetype#same_filetypes = {}
-    " let g:context_filetype#same_filetypes._ = '_'
+    " remove M windows characters
+    map ;m :e ++ff=dos<cr>
 
-    " Jedi-vim ------------------------------
+    " replace href, src start img, css, js to static
+    map ;st :%s/\v(href\|src)\="((img\|css\|js)[^"]+)"/\1\="{% static '\2' %}"/gc
 
-    " " Disable autocompletion (using deoplete instead)
-    " let g:jedi#completions_enabled = 0
+    " replace background-image start img, css, js to static
+    map ;sb :%s/\v(background-image: url)\("((img\|css\|js)[^"]+)"/\1\({% static '\2' %})"/gc
 
-    " " All these mappings work only for python code:
-    " " Go to definition
-    " let g:jedi#goto_command = ',d'
-    " " Find ocurrences
-    " let g:jedi#usages_command = ',o'
-    " " Find assignments
-    " let g:jedi#goto_assignments_command = ',a'
-    " let g:jedi#rename_command = ",rc"
-    " " Go to definition in new tab
-    " nmap ,D :tab split<CR>:call jedi#goto()<CR>
+    map ;sl :%s/\v"legacy_id": ([0-9]+)/"legacy_id": "\1"/gc
+
+    " Tive que adicionar essa linha para funcionar com o schemacolor horizon
+    " hi link CocFloating markdown
 " }}}

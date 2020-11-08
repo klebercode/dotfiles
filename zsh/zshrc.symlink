@@ -126,7 +126,7 @@ fi
 export RIPGREP_CONFIG_PATH="$HOME/.rgrc"
 
 [ -f $HOME/.fzf.zsh ] && source $HOME/.fzf.zsh
-export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,node_modules}/*" 2> /dev/null'
+export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,node_modules,dist}/*" 2> /dev/null'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 # alias git to hub
@@ -232,18 +232,29 @@ alias android="/Users/klebersoares/Library/Android/sdk/emulator/emulator -avd Ne
 alias worknow="./cli/start_work.sh"
 alias reviewnow="./cli/start_review.sh"
 
-alias gitbr="git branch -r | grep -v '\->' | while read remote; do git branch --track "${remote#origin/}" "$remote"; done"
+alias gitbr="git branch -r | grep -v '\->' | while read remote; do git branch --track '${remote#origin/}' '$remote'; done"
 
 # ionic
-alias ionicbuildprod="cross-env ENV='prod' ionic cordova build"
-alias ionicbuilddev="cross-env ENV='dev' ionic cordova build"
-alias ionicserveprod="cross-env ENV='prod' ionic serve"
-alias ionicservedev="cross-env ENV='dev' ionic serve"
-alias ionicruniosprod="cross-env ENV='prod' ionic cordova run ios -c -l -s"
-alias ionicruniosdev="cross-env ENV='dev' ionic cordova run ios -c -l -s"
-alias ionicrunandroidprod="cross-env ENV='prod' ionic cordova run android -c -l -s"
-alias ionicrunandroiddev="cross-env ENV='dev' ionic cordova run android -c -l -s"
-alias ionicclean="ionic cordova platform rm ios; ionic cordova platform rm android; ionic cordova plugin rm cordova-sqlite-storage; npm i cordova-sqlite-storage@latest && ionic cordova plugin add cordova-sqlite-storage; ionic cordova platform add ios; ionic cordova platform add android"
+alias ibp="cross-env ENV='prod' ionic cordova build"
+alias ibd="cross-env ENV='dev' ionic cordova build"
+alias isp="cross-env ENV='prod' ionic serve"
+alias isd="cross-env ENV='dev' ionic serve"
+alias irip="cross-env ENV='prod' ionic cordova run ios -c -l -s"
+alias irid="cross-env ENV='dev' ionic cordova run ios -c -l -s"
+alias irap="cross-env ENV='prod' ionic cordova run android -c -l -s"
+alias irad="cross-env ENV='dev' ionic cordova run android -c -l -s"
+alias ic="ionic cordova platform rm ios; ionic cordova platform rm android; ionic cordova plugin rm cordova-sqlite-storage; npm i cordova-sqlite-storage@latest && ionic cordova plugin add cordova-sqlite-storage; ionic cordova platform add ios; ionic cordova platform add android"
+
+#docker
+function _dcdb {
+  docker exec -i database psql -U postgres -c "CREATE DATABASE "$1" WITH ENCODING='UTF8' OWNER="$2";";
+}
+alias dcdb=_dcdb
+
+function _dcr {
+  docker exec -i database psql -U postgres -c "CREATE ROLE "$1" WITH LOGIN ENCRYPTED PASSWORD '"$2"';";
+}
+alias dcr=_dcr
 
 # pyenv venv
 function _eac {
@@ -281,9 +292,9 @@ export PKG_CONFIG_PATH="/usr/local/opt/openssl/lib/pkgconfig"
 # export CPPFLAGS="-I/usr/local/opt/openssl@1.1/include"
 # export PKG_CONFIG_PATH="/usr/local/opt/openssl@1.1/lib/pkgconfig"
 
-# export LDFLAGS="-L/usr/local/opt/zlib/lib"
-# export CPPFLAGS="-I/usr/local/opt/zlib/include"
-# export PKG_CONFIG_PATH="/usr/local/opt/zlib/lib/pkgconfig"
+export LDFLAGS="-L/usr/local/opt/zlib/lib"
+export CPPFLAGS="-I/usr/local/opt/zlib/include"
+export PKG_CONFIG_PATH="/usr/local/opt/zlib/lib/pkgconfig"
 
 export PATH="/usr/local/opt/sphinx-doc/bin:$PATH"
 
@@ -291,11 +302,14 @@ export PATH="/usr/local/opt/sqlite/bin:$PATH"
 export PATH="/Users/klebersoares/development/flutter/bin:$PATH"
 export PATH="/Users/klebersoares/Library/Android/sdk/build-tools/28.0.3/zipalign:$PATH"
 export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_191.jdk/Contents/Home"
+export ANDROID_SDK_ROOT="/Users/klebersoares/Library/Android/sdk"
 export ANDROID_HOME="/Users/klebersoares/Library/Android/sdk"
 export PATH="$PATH:$ANDROID_HOME/emulator"
 export PATH="$PATH:$ANDROID_HOME/tools"
 export PATH="$PATH:$ANDROID_HOME/tools/bin"
 export PATH="$PATH:$ANDROID_HOME/platform-tools"
+
+export PATH="/usr/local/opt/ruby/bin:$PATH"
 
 # pyenv
 export PYENV_ROOT="$HOME/.pyenv"
@@ -338,3 +352,6 @@ export PATH="$GOPATH/bin:$GOROOT/bin:$PATH"
 export PATH="$HOME/bin:$PATH"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+

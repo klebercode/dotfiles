@@ -13,6 +13,14 @@
     "diagnostic.infoSign": "●",
     "diagnostic.hintSign": "○",
     "git.addGBlameToBufferVar": true,
+    "styled-components.tags": [
+        "styled",
+        "css",
+        "sty",
+        "extend",
+        "injectGlobal",
+        "createGlobalStyle"
+    ],
     "coc.preferences.formatOnSaveFiletypes": [
         "typescript", 
         "javascript", 
@@ -21,7 +29,10 @@
         "typescriptreact", 
         "javascriptreact", 
         "python", 
-        "json"
+        "json",
+        "html",
+        "handlebars",
+        "htmldjango"
     ],
     "explorer.icon.enableNerdfont": true,
     "explorer.sources": [
@@ -45,6 +56,13 @@
     "python.linting.pylintEnabled": true,
     "python.linting.enabled": true,
     "python.formatting.provider": "black",
+    "html.enable": true,
+    "html.filetypes": [
+        "html",
+        "handlebars",
+        "htmldjango",
+    ],
+    "html.format.enable": true,
     "diagnostic-languageserver.filetypes": {
         "sh": "shellcheck"
     },
