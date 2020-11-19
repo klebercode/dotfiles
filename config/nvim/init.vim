@@ -54,7 +54,7 @@ call plug#begin('~/.config/nvim/plugged')
 " }}}
 
 " Appearance {{{
-    set cursorline
+    set nocursorline
     set number " show line numbers
     set nowrap " turn on line wrapping
     set formatoptions-=t
@@ -103,23 +103,28 @@ call plug#begin('~/.config/nvim/plugged')
 
     set t_Co=256 " Explicitly tell vim that the terminal supports 256 colors
     " switch cursor to line when in insert mode, and block when not
-    set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
+    set guicursor=n-v-c:block,i-ci-ve:block,r-cr:block,o:block
     \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
-    \,sm:block-blinkwait175-blinkoff150-blinkon175
+    \,n-v-c:block-blinkwait175-blinkoff150-blinkon0
+    " Para o cursor ficar visível no insert 
+    " tive que acrescentar essa linha e na linha superior
+    " mudei de blinkon175 para blinkon0
+    \,i:block-blinkwait175-blinkoff150-blinkon175
 
     if &term =~ '256color'
         " disable background color erase
         set t_ut=
     endif
 
-    " enable 24 bit color support if supported
-    if (has("termguicolors"))
-        if (!(has("nvim")))
-            let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-            let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-        endif
-        set termguicolors
-    endif
+    " Enable 24 bit color support if supported
+    " Para o wal funcionar, tem que comentar esse bloco
+    " if (has("termguicolors"))
+    "     if (!(has("nvim")))
+    "         let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+    "         let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+    "     endif
+    "     set termguicolors
+    " endif
 
     " highlight conflicts
     match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
@@ -131,6 +136,7 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'agude/vim-eldar'
     Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
     Plug 'kjssad/quantum.vim'
+    Plug 'dylanaraps/wal'
 
     " LightLine {{{
         Plug 'itchyny/lightline.vim'
@@ -140,7 +146,7 @@ call plug#begin('~/.config/nvim/plugged')
         " \   'colorscheme': 'challenger_deep',
         " \   'colorscheme': 'quantum',
         let g:lightline = {
-            \   'colorscheme': 'solarized',
+            \   'colorscheme': '16color',
             \   'active': {
             \       'left': [ [ 'mode', 'paste' ],
             \               [ 'gitbranch' ],
@@ -705,6 +711,12 @@ call plug#begin('~/.config/nvim/plugged')
 call plug#end()
 
 " Colorscheme and final setup {{{
+    "
+    " COLORS
+    "
+    " Colors are made by generating a color scheme based on a picture.
+    " This functionality is enabled through https://github.com/dylanaraps/pywal
+    "
     " This call must happen after the plug#end() call to ensure
     " that the colorschemes have been loaded
     if filereadable(expand("~/.vimrc_background"))
@@ -717,7 +729,8 @@ call plug#end()
         " colorscheme eldar
         " colorscheme horizon
         " colorscheme challenger_deep
-        colorscheme quantum
+        " colorscheme quantum
+        colorscheme wal
     endif
     syntax on
     filetype plugin indent on
@@ -745,12 +758,24 @@ call plug#end()
 " }}}
 
 " Kleber {{{
+    Plug 'mattn/webapi-vim'
+    Plug 'mattn/vim-gist'
+
     Plug 'hugolgst/vimsence'
     Plug 'majutsushi/tagbar'
     nmap <leader>j :TagbarToggle<CR>
 
     nmap <leader>hd :set filetype=htmldjango<cr>
     nmap <leader>ht :set filetype=html<cr>
+
+    " Remove corretor (highlight) das palavras
+    nmap ;sn :set nospell<cr>
+    " Define corretor (highlight) das palavras em ingles
+    nmap ;se :setlocal spell spelllang=en_us<cr>
+    " Define corretor (highlight) das palavras em portugues
+    nmap ;sp :setlocal spell spelllang=pt_br<cr>
+    " Desliga o spell automatico para todos os arquivos
+    autocmd BufEnter *.* set nospell
 
     " remove M windows characters
     map ;m :e ++ff=dos<cr>
@@ -765,4 +790,14 @@ call plug#end()
 
     " Tive que adicionar essa linha para funcionar com o schemacolor horizon
     " hi link CocFloating markdown
+
+    " Custons to wal {{{
+        " Make custom highlights after declaring other colors, they might override
+        hi CursorColumn ctermbg=4 ctermfg=7 guibg=4
+        " Highlight current line number
+        hi CursorLineNr ctermfg=12
+        " Highlight to list
+        hi NonText ctermfg=8
+        hi Whitespace ctermfg=8
+    " }}}
 " }}}

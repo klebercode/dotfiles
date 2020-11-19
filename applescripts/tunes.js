@@ -14,6 +14,11 @@ if (Application("Music").running()) {
     const artist = track.artist();
     const title = track.name();
     output = `${title} - ${artist}`.substr(0, 50);
+} else if (Application("Deezer").running()) {
+    const track = Application("Deezer").currentTrack;
+    const artist = track.artist();
+    const title = track.name();
+    output = `${title} - ${artist}`.substr(0, 50);
 }
 
 output;

@@ -213,6 +213,7 @@ alias tns='tmux new-session -s'
 
 alias dws="cd ~/Documents/Workspace/code"
 alias ws="cd ~/Workspace/code"
+alias dw="cd ~/Downloads/wallpaper"
 
 alias murucutu="ssh root@192.155.93.236"
 alias jacurutu="ssh root@178.128.149.206"
