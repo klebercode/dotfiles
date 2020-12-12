@@ -103,13 +103,9 @@ call plug#begin('~/.config/nvim/plugged')
 
     set t_Co=256 " Explicitly tell vim that the terminal supports 256 colors
     " switch cursor to line when in insert mode, and block when not
-    set guicursor=n-v-c:block,i-ci-ve:block,r-cr:block,o:block
+    set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
     \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
-    \,n-v-c:block-blinkwait175-blinkoff150-blinkon0
-    " Para o cursor ficar visível no insert 
-    " tive que acrescentar essa linha e na linha superior
-    " mudei de blinkon175 para blinkon0
-    \,i:block-blinkwait175-blinkoff150-blinkon175
+    \,sm:block-blinkwait175-blinkoff150-blinkon175
 
     if &term =~ '256color'
         " disable background color erase
@@ -118,13 +114,13 @@ call plug#begin('~/.config/nvim/plugged')
 
     " Enable 24 bit color support if supported
     " Para o wal funcionar, tem que comentar esse bloco
-    " if (has("termguicolors"))
-    "     if (!(has("nvim")))
-    "         let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-    "         let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-    "     endif
-    "     set termguicolors
-    " endif
+    if (has("termguicolors"))
+        if (!(has("nvim")))
+            let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+            let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+        endif
+        set termguicolors
+    endif
 
     " highlight conflicts
     match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
@@ -145,8 +141,40 @@ call plug#begin('~/.config/nvim/plugged')
         " \   'colorscheme': 'horizon',
         " \   'colorscheme': 'challenger_deep',
         " \   'colorscheme': 'quantum',
+        " \   'colorscheme': '16color',
+        " \   'colorscheme': 'Currently',
+        " \   'colorscheme': 'wombat',
+        " \   'colorscheme': 'solarized',
+        " \   'colorscheme': 'powerline',
+        " \   'colorscheme': 'powerlineish',
+        " \   'colorscheme': 'jellybeans',
+        " \   'colorscheme': 'molokai',
+        " \   'colorscheme': 'seoul256',
+        " \   'colorscheme': 'darcula',
+        " \   'colorscheme': 'selenized_dark',
+        " \   'colorscheme': 'selenized_black',
+        " \   'colorscheme': 'selenized_light',
+        " \   'colorscheme': 'selenized_white',
+        " \   'colorscheme': 'Tomorrow',
+        " \   'colorscheme': 'Tomorrow_Night',
+        " \   'colorscheme': 'Tomorrow_Night_Blue',
+        " \   'colorscheme': 'Tomorrow_Night_Bright',
+        " \   'colorscheme': 'Tomorrow_Night_Eighties',
+        " \   'colorscheme': 'PaperColor',
+        " \   'colorscheme': 'landscape',
+        " \   'colorscheme': 'one',
+        " \   'colorscheme': 'materia',
+        " \   'colorscheme': 'material',
+        " \   'colorscheme': 'OldHope',
+        " \   'colorscheme': 'nord',
+        " \   'colorscheme': 'deus',
+        " \   'colorscheme': 'simpleblack',
+        " \   'colorscheme': 'srcery_drk',
+        " \   'colorscheme': 'ayu_mirage',
+        " \   'colorscheme': 'ayu_light',
+        " \   'colorscheme': 'ayu_dark',
         let g:lightline = {
-            \   'colorscheme': '16color',
+            \   'colorscheme': 'base16',
             \   'active': {
             \       'left': [ [ 'mode', 'paste' ],
             \               [ 'gitbranch' ],
@@ -451,9 +479,10 @@ call plug#begin('~/.config/nvim/plugged')
 
     " FZF {{{
         Plug '/usr/local/opt/fzf'
+        Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
         Plug 'junegunn/fzf.vim'
-        " let g:fzf_layout = { 'down': '~25%' }
-        let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.8 } }
+        let g:fzf_layout = { 'down': '~50%' }
+        " let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.8 } }
         let $FZF_DEFAULT_OPTS='--reverse'
 
         if isdirectory(".git")
@@ -517,13 +546,6 @@ call plug#begin('~/.config/nvim/plugged')
         Plug 'rbong/vim-flog'
     " }}}
 
-    " UltiSnips {{{
-        Plug 'SirVer/ultisnips' " Snippets plugin
-        let g:UltiSnipsExpandTrigger="<C-l>"
-        let g:UltiSnipsJumpForwardTrigger="<C-j>"
-        let g:UltiSnipsJumpBackwardTrigger="<C-k>"
-    " }}}
-
     " coc {{{
         Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
 
@@ -539,13 +561,13 @@ call plug#begin('~/.config/nvim/plugged')
         \ 'coc-vimlsp',
         \ 'coc-emmet',
         \ 'coc-prettier',
-        \ 'coc-ultisnips',
         \ 'coc-explorer',
         \ 'coc-diagnostic',
         \ 'coc-python',
         \ 'coc-snippets',
         \ 'coc-styled-components',
-        \ 'coc-highlight'
+        \ 'coc-highlight',
+        \ 'coc-marketplace'
         \ ]
 
         autocmd CursorHold * silent call CocActionAsync('highlight')
@@ -768,6 +790,9 @@ call plug#end()
     nmap <leader>hd :set filetype=htmldjango<cr>
     nmap <leader>ht :set filetype=html<cr>
 
+    " toggle cursor column
+    nnoremap <leader>ii :set cursorcolumn!<cr>
+
     " Remove corretor (highlight) das palavras
     nmap ;sn :set nospell<cr>
     " Define corretor (highlight) das palavras em ingles
@@ -791,13 +816,43 @@ call plug#end()
     " Tive que adicionar essa linha para funcionar com o schemacolor horizon
     " hi link CocFloating markdown
 
-    " Custons to wal {{{
-        " Make custom highlights after declaring other colors, they might override
-        hi CursorColumn ctermbg=4 ctermfg=7 guibg=4
-        " Highlight current line number
-        hi CursorLineNr ctermfg=12
-        " Highlight to list
-        hi NonText ctermfg=8
-        hi Whitespace ctermfg=8
+    " Custom color to colors+wal {{{
+        highlight clear SpellBad
+        highlight SpellBad gui=undercurl
+        highlight normal guibg=none ctermbg=none
+        highlight LineNr guibg=none ctermbg=none
+        highlight DiffAdd guibg=NONE
+        highlight DiffDelete guibg=NONE
+        highlight DiffChange guibg=NONE
+        highlight DiffText guibg=NONE
+        highlight SignColumn guibg=NONE
+        highlight CursorLineNr guibg=none ctermbg=none
+        " highlight Pmenu ctermfg=3 ctermbg=0 guibg=0
+
+        " highlight CursorLine guibg=#00ff3f guifg=black
+        " highlight CursorColumn guibg=#00ff3f guifg=black
+        "
+        " highlight CursorLine guibg=green guifg=black
+        " highlight CursorColumn guibg=red guifg=black
+        " highlight Search guibg=yellow guifg=black
+        "
+        " highlight CursorLine guibg=#95ffa4 guifg=black
+        " highlight CursorColumn guibg=#906cff guifg=black
+        " highlight Search guibg=#ffe9aa guifg=black
     " }}}
+
+    " " Custom color to wal {{{
+    "     " Make custom highlights after declaring other colors, they might override
+    "     hi CursorColumn ctermbg=4 ctermfg=7 guibg=4
+    "     " Highlight current line number
+    "     hi CursorLineNr ctermfg=12
+    "     " hi LineNr ctermbg=32
+    "     " Highlight to list
+    "     hi NonText ctermfg=8
+    "     hi Whitespace ctermfg=8
+    "     " Highlight trailing whitespace
+    "     hi link ExtraWhitespace Comment
+    "     " Make floating menu have proper colors
+    "     hi Pmenu ctermfg=3 ctermbg=0 guibg=0
+    " " }}}
 " }}}
