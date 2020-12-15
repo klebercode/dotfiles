@@ -174,7 +174,7 @@ call plug#begin('~/.config/nvim/plugged')
         " \   'colorscheme': 'ayu_light',
         " \   'colorscheme': 'ayu_dark',
         let g:lightline = {
-            \   'colorscheme': 'base16',
+            \   'colorscheme': 'horizon',
             \   'active': {
             \       'left': [ [ 'mode', 'paste' ],
             \               [ 'gitbranch' ],
@@ -780,6 +780,9 @@ call plug#end()
 " }}}
 
 " Kleber {{{
+    Plug 'jparise/vim-graphql'
+    au BufNewFile,BufRead *.gql setfiletype graphql
+
     Plug 'mattn/webapi-vim'
     Plug 'mattn/vim-gist'
 
@@ -817,28 +820,29 @@ call plug#end()
     " hi link CocFloating markdown
 
     " Custom color to colors+wal {{{
-        highlight clear SpellBad
-        highlight SpellBad gui=undercurl
-        highlight normal guibg=none ctermbg=none
-        highlight LineNr guibg=none ctermbg=none
-        highlight DiffAdd guibg=NONE
-        highlight DiffDelete guibg=NONE
-        highlight DiffChange guibg=NONE
-        highlight DiffText guibg=NONE
-        highlight SignColumn guibg=NONE
-        highlight CursorLineNr guibg=none ctermbg=none
-        " highlight Pmenu ctermfg=3 ctermbg=0 guibg=0
+        hi! clear SpellBad
+        hi! SpellBad gui=undercurl
+        hi! Normal guibg=none ctermbg=none
+        hi! NonText guibg=none ctermbg=none
+        hi! LineNr guibg=none ctermbg=none
+        hi! DiffAdd guibg=NONE
+        hi! DiffDelete guibg=NONE
+        hi! DiffChange guibg=NONE
+        hi! DiffText guibg=NONE
+        hi! SignColumn guibg=NONE
+        hi! CursorLineNr guibg=none ctermbg=none
+        " hi! Pmenu ctermfg=3 ctermbg=0 guibg=0
 
-        " highlight CursorLine guibg=#00ff3f guifg=black
-        " highlight CursorColumn guibg=#00ff3f guifg=black
+        " hi! CursorLine guibg=#00ff3f guifg=black
+        " hi! CursorColumn guibg=#00ff3f guifg=black
         "
-        " highlight CursorLine guibg=green guifg=black
-        " highlight CursorColumn guibg=red guifg=black
-        " highlight Search guibg=yellow guifg=black
+        " hi! CursorLine guibg=green guifg=black
+        " hi! CursorColumn guibg=red guifg=black
+        " hi! Search guibg=yellow guifg=black
         "
-        " highlight CursorLine guibg=#95ffa4 guifg=black
-        " highlight CursorColumn guibg=#906cff guifg=black
-        " highlight Search guibg=#ffe9aa guifg=black
+        " hi! CursorLine guibg=#95ffa4 guifg=black
+        " hi! CursorColumn guibg=#906cff guifg=black
+        " hi! Search guibg=#ffe9aa guifg=black
     " }}}
 
     " " Custom color to wal {{{
