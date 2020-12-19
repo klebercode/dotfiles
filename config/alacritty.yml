@@ -132,8 +132,10 @@ draw_bold_text_with_bright_colors: false
 colors:
   # Default colours
   primary:
-    background: '0x1c1b22'
-    foreground: '0xffffff'
+    # hard contrast: background = '#1d2021'
+    background: '#282828'
+    # soft contrast: background = '#32302f'
+    foreground: '#ebdbb2'
 
   # Colors that should be used to draw the terminal cursor. If these are unset,
   # the cursor colour will be the inverse of the cell colour.
@@ -143,25 +145,25 @@ colors:
 
   # Normal colors
   normal:
-    black:   '0x1c1b22'
-    red:     '0xf072bb'
-    green:   '0x2ee0a7'
-    yellow:  '0xefe4a1'
-    blue:    '0x78a1fa'
-    magenta: '0xaf81fe'
-    cyan:    '0x6efedf'
-    white:   '0xffffff'
+    black:   '#282828'
+    red:     '#cc241d'
+    green:   '#98971a'
+    yellow:  '#d79921'
+    blue:    '#458588'
+    magenta: '#b16286'
+    cyan:    '#689d6a'
+    white:   '#a89984'
 
   # Bright colors
   bright:
-    black:   '0x545454'
-    red:     '0xef5350'
-    green:   '0x8bc34a'
-    yellow:  '0xffeb3b'
-    blue:    '0x64b5f6'
-    magenta: '0xba68c8'
-    cyan:    '0x26c6da'
-    white:   '0xe0e0e0'
+    black:   '#928374'
+    red:     '#fb4934'
+    green:   '#b8bb26'
+    yellow:  '#fabd2f'
+    blue:    '#83a598'
+    magenta: '#d3869b'
+    cyan:    '#8ec07c'
+    white:   '#ebdbb2'
 
   # Dim colors (Optional)
   dim:
@@ -173,6 +175,21 @@ colors:
     magenta: '0xcc99cc'
     cyan:    '0x66cccc'
     white:   '0xdddddd'
+
+  # Solarflare
+  # primary:
+  #   background: '0x18262f'
+  #   foreground: '0xa6afb8'
+
+  # normal:
+  #   black:   '0x18262f'
+  #   red:     '0xef5253'
+  #   green:   '0x7cc844'
+  #   yellow:  '0xe4b51c'
+  #   blue:    '0x33b5e1'
+  #   magenta: '0xa363d5'
+  #   cyan:    '0x52cbb0'
+  #   white:   '0xa6afb8'
 
   # Rebecca
   # primary:
@@ -260,7 +277,7 @@ visual_bell:
   duration: 0
 
 # Background opacity
-background_opacity: 0.5
+background_opacity: 0.9
 
 # Key bindings
 #

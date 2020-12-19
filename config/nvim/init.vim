@@ -54,7 +54,7 @@ call plug#begin('~/.config/nvim/plugged')
 " }}}
 
 " Appearance {{{
-    set nocursorline
+    set cursorline
     set number " show line numbers
     set nowrap " turn on line wrapping
     set formatoptions-=t
@@ -137,7 +137,6 @@ call plug#begin('~/.config/nvim/plugged')
     " LightLine {{{
         Plug 'itchyny/lightline.vim'
         Plug 'nicknisi/vim-base16-lightline'
-        " \   'colorscheme': 'solarized',
         " \   'colorscheme': 'horizon',
         " \   'colorscheme': 'challenger_deep',
         " \   'colorscheme': 'quantum',
@@ -174,7 +173,7 @@ call plug#begin('~/.config/nvim/plugged')
         " \   'colorscheme': 'ayu_light',
         " \   'colorscheme': 'ayu_dark',
         let g:lightline = {
-            \   'colorscheme': 'horizon',
+            \   'colorscheme': 'powerline',
             \   'active': {
             \       'left': [ [ 'mode', 'paste' ],
             \               [ 'gitbranch' ],
@@ -825,16 +824,18 @@ call plug#end()
         hi! Normal guibg=none ctermbg=none
         hi! NonText guibg=none ctermbg=none
         hi! LineNr guibg=none ctermbg=none
-        hi! DiffAdd guibg=NONE
-        hi! DiffDelete guibg=NONE
-        hi! DiffChange guibg=NONE
-        hi! DiffText guibg=NONE
-        hi! SignColumn guibg=NONE
+        hi! DiffAdd guibg=none
+        hi! DiffDelete guibg=none
+        hi! DiffChange guibg=none
+        hi! DiffText guibg=none
+        hi! SignColumn guibg=none
         hi! CursorLineNr guibg=none ctermbg=none
+        " hi! Pmenu guibg=#1c1b22
+        " hi! Pmenu guibg=#1d2021
         " hi! Pmenu ctermfg=3 ctermbg=0 guibg=0
 
-        " hi! CursorLine guibg=#00ff3f guifg=black
-        " hi! CursorColumn guibg=#00ff3f guifg=black
+        " hi! CursorLine guibg=#7cc844 guifg=black
+        " hi! CursorColumn guibg=#7cc844 guifg=black
         "
         " hi! CursorLine guibg=green guifg=black
         " hi! CursorColumn guibg=red guifg=black
