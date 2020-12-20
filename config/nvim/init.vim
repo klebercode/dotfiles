@@ -133,10 +133,13 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
     Plug 'kjssad/quantum.vim'
     Plug 'dylanaraps/wal'
+    Plug 'heraldofsolace/nisha-vim'
+    Plug 'yuttie/hydrangea-vim'
 
     " LightLine {{{
         Plug 'itchyny/lightline.vim'
         Plug 'nicknisi/vim-base16-lightline'
+        " \   'colorscheme': 'hydrangea',
         " \   'colorscheme': 'horizon',
         " \   'colorscheme': 'challenger_deep',
         " \   'colorscheme': 'quantum',
@@ -173,7 +176,7 @@ call plug#begin('~/.config/nvim/plugged')
         " \   'colorscheme': 'ayu_light',
         " \   'colorscheme': 'ayu_dark',
         let g:lightline = {
-            \   'colorscheme': 'powerline',
+            \   'colorscheme': 'hydrangea',
             \   'active': {
             \       'left': [ [ 'mode', 'paste' ],
             \               [ 'gitbranch' ],
@@ -207,8 +210,11 @@ call plug#begin('~/.config/nvim/plugged')
             \       'active': [ 'filename', 'modified' ],
             \       'inactive': [ 'filename', 'modified' ],
             \   },
-            \   'separator': { 'left': '', 'right': '' },
-            \   'subseparator': { 'left': '', 'right': '' }
+            \ 'component': {
+            \   'readonly': '%{&readonly?"":""}',
+            \ },
+            \   'separator': { 'left': '', 'right': '' },
+            \   'subseparator': { 'left': '', 'right': '' }
         \ }
     " }}}
 " }}}

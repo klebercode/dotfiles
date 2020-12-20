@@ -27,8 +27,8 @@ window:
   # Blank space added around the window in pixels. This padding is not scaled by
   # DPI and the specified value is always added at both opposing sides.
   padding:
-    x: 10
-    y: 10
+    x: 0
+    y: 0
 
   # Spread additional padding evenly around the terminal content.
   dynamic_padding: false
@@ -132,10 +132,8 @@ draw_bold_text_with_bright_colors: false
 colors:
   # Default colours
   primary:
-    # hard contrast: background = '#1d2021'
-    background: '#282828'
-    # soft contrast: background = '#32302f'
-    foreground: '#ebdbb2'
+    background: '#1e222c'
+    foreground: '#c3d5ec'
 
   # Colors that should be used to draw the terminal cursor. If these are unset,
   # the cursor colour will be the inverse of the cell colour.
@@ -145,25 +143,25 @@ colors:
 
   # Normal colors
   normal:
-    black:   '#282828'
-    red:     '#cc241d'
-    green:   '#98971a'
-    yellow:  '#d79921'
-    blue:    '#458588'
-    magenta: '#b16286'
-    cyan:    '#689d6a'
-    white:   '#a89984'
+    black:   '#1e222c'
+    red:     '#e91e63'
+    green:   '#36c2c2'
+    yellow:  '#fff222'
+    blue:    '#537dd5'
+    magenta: '#e242ac'
+    cyan:    '#169ec4'
+    white:   '#edf5ff'
 
   # Bright colors
   bright:
-    black:   '#928374'
-    red:     '#fb4934'
-    green:   '#b8bb26'
-    yellow:  '#fabd2f'
-    blue:    '#83a598'
-    magenta: '#d3869b'
-    cyan:    '#8ec07c'
-    white:   '#ebdbb2'
+    black:   '#586374'
+    red:     '#e91e63'
+    green:   '#36c2c2'
+    yellow:  '#fff222'
+    blue:    '#537dd5'
+    magenta: '#e242ac'
+    cyan:    '#169ec4'
+    white:   '#edf5ff'
 
   # Dim colors (Optional)
   dim:
@@ -175,6 +173,21 @@ colors:
     magenta: '0xcc99cc'
     cyan:    '0x66cccc'
     white:   '0xdddddd'
+
+  # Solarflare
+  # primary:
+  #   background: '0x18262f'
+  #   foreground: '0xa6afb8'
+
+  # normal:
+  #   black:   '0x18262f'
+  #   red:     '0xef5253'
+  #   green:   '0x7cc844'
+  #   yellow:  '0xe4b51c'
+  #   blue:    '0x33b5e1'
+  #   magenta: '0xa363d5'
+  #   cyan:    '0x52cbb0'
+  #   white:   '0xa6afb8'
 
   # Solarflare
   # primary:
@@ -277,7 +290,7 @@ visual_bell:
   duration: 0
 
 # Background opacity
-background_opacity: 0.9
+background_opacity: 1
 
 # Key bindings
 #
