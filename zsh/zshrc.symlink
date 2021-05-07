@@ -224,31 +224,85 @@ alias dw="cd ~/Downloads/wallpaper"
 alias murucutu="ssh root@192.155.93.236"
 alias jacurutu="ssh root@178.128.149.206"
 
+function _opacity {
+  ~/Workspace/code/dotfiles/opacity.sh $*
+}
+alias opacity="_opacity"
+
 # tunnel
 # ngrok = ngrok http 8000
 # localtunnel = lt --port 8000 --subdomain xxxxxxx
 
-# virtualenv python alias
+# # virtualenv python alias
 # alias manage='python $VIRTUAL_ENV/../manage.py'
 # alias nb="manage shell_plus --notebook"
 # alias run='python $VIRTUAL_ENV/../manage.py runserver'
-# alias runs='stunnel stunnel/dev_https & python $VIRTUAL_ENV/../manage.py runserver & HTTPS=1 python $VIRTUAL_ENV/../manage.py runserver 8001'
+# # alias runs='stunnel stunnel/dev_https & python $VIRTUAL_ENV/../manage.py runserver & HTTPS=1 python $VIRTUAL_ENV/../manage.py runserver 8001'
+# function _runs {
+#   stunnel stunnel/dev_https & python $VIRTUAL_ENV/../manage.py runserver $* & HTTPS=1 python $VIRTUAL_ENV/../manage.py runserver $*+1
+# }
+# alias runs="_runs"
 
+# alias runceleryworker="celery -A connectedu worker -l info --loglevel=DEBUG"
+# alias runcelerybeats="celery -A connectedu beat -l info -S django --loglevel=DEBUG"
+# alias runceleryflower="celery -A connectedu flower"
+# # virtualenv end
+
+# pipenv python alias
+function _erun {
+  pipenv run $*
+}
+alias prun="_erun"
 alias manage='pipenv run python manage.py'
-alias nb='pipenv run python manage.py shell_plus --notebook'
+alias nb='cd .ipynb && pipenv run python ../manage.py shell_plus --notebook'
 alias run="pipenv run python manage.py runserver"
-alias runs='stunnel stunnel/dev_https & pipenv run python manage.py runserver & HTTPS=1 python manage.py runserver 8001'
+# alias runs='stunnel stunnel/dev_https & pipenv run python manage.py runserver & HTTPS=1 python manage.py runserver 8001'
 function _runs {
-  stunnel stunnel/dev_https & pipenv run python manage.py runserver $* & HTTPS=1 python manage.py runserver $*+1
+  stunnel stunnel/dev_https & pipenv run python manage.py runserver & HTTPS=1 pipenv run python manage.py runserver $*
 }
 alias runs="_runs"
 
 alias runceleryworker="pipenv run celery -A connectedu worker -l info --loglevel=DEBUG"
 alias runcelerybeats="pipenv run celery -A connectedu beat -l info -S django --loglevel=DEBUG"
 alias runceleryflower="pipenv run celery -A connectedu flower"
+# pipenv end
+
+# poetry python alias
+function _poerun {
+  poetry run $*
+}
+alias poerun="_poerun"
+alias pomanage='poetry run python manage.py'
+alias ponb='poetry run python manage.py shell_plus --notebook'
+alias porun="poetry run python manage.py runserver"
+function _poruns {
+  stunnel stunnel/dev_https & poetry run python manage.py runserver & HTTPS=1 poetry run python manage.py runserver $*
+}
+alias poruns="_poruns"
+
+function _poworker {
+  poetry run celery -A $* worker -l info --loglevel=DEBUG
+}
+alias poworker="_poworker"
+
+function _pobeat {
+  poetry run celery -A $* beat -l info -S django --loglevel=DEBUG
+}
+alias pobeat="_pobeat"
+
+function _poflower {
+  poetry run celery -A $* flower
+}
+alias poflower="_poflower"
+# poetry end
 
 alias rmmigrations='find . -path "*/migrations/*.py" -not -name "__init__.py" -delete'
 alias rmmigrationscache='find . -path "*/migrations/*.pyc"  -delete'
+
+function _startgraphql {
+  mkdir $* && mkdir $*/types && mkdir $*/inputs && mkdir $*/mutations && touch $*/__init__.py && touch $*/types/__init__.py && touch $*/inputs/__init__.py && touch $*/mutations/__init__.py
+}
+alias startgraphql=_startgraphql
 
 alias android="/Users/klebersoares/Library/Android/sdk/emulator/emulator -avd Nexus_5X_API_28 -netdelay none -netspeed full -dns-server 8.8.8.8"
 
@@ -258,8 +312,8 @@ alias reviewnow="./cli/start_review.sh"
 alias gitbr="git branch -r | grep -v '\->' | while read remote; do git branch --track '${remote#origin/}' '$remote'; done"
 
 # ionic
-alias ibp="cross-env ENV='prod' ionic cordova build"
-alias ibd="cross-env ENV='dev' ionic cordova build"
+alias ibp="cross-env ENV='prod' ionic cordova build --release"
+alias ibd="cross-env ENV='dev' ionic cordova build --release"
 alias isp="cross-env ENV='prod' ionic serve"
 alias isd="cross-env ENV='dev' ionic serve"
 alias irip="cross-env ENV='prod' ionic cordova run ios -c -l -s"
@@ -323,7 +377,7 @@ export PATH="/usr/local/opt/sphinx-doc/bin:$PATH"
 
 export PATH="/usr/local/opt/sqlite/bin:$PATH"
 export PATH="/Users/klebersoares/development/flutter/bin:$PATH"
-export PATH="/Users/klebersoares/Library/Android/sdk/build-tools/28.0.3/zipalign:$PATH"
+export PATH="/Users/klebersoares/Library/Android/sdk/build-tools/29.0.3/zipalign:$PATH"
 export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_191.jdk/Contents/Home"
 export ANDROID_SDK_ROOT="/Users/klebersoares/Library/Android/sdk"
 export ANDROID_HOME="/Users/klebersoares/Library/Android/sdk"
@@ -378,3 +432,6 @@ export PATH="$HOME/bin:$PATH"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+export PATH="$HOME/.poetry/bin:$PATH"
+export PATH="$HOME/Library/Caches/pypoetry/virtualenvs:$PATH"

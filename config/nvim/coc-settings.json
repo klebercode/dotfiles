@@ -86,5 +86,9 @@
       },
       "sourceName": "shellcheck"
     }
-  }
+  },
+  "snippets.ultisnips.directories": [
+    "UltiSnips",
+    "~/.config/nvim/plugged/vim-snippets/UltiSnips/"
+  ]
 }

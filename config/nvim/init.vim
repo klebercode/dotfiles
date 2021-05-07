@@ -54,7 +54,7 @@ call plug#begin('~/.config/nvim/plugged')
 " }}}
 
 " Appearance {{{
-    set cursorline
+    " set cursorline
     set number " show line numbers
     set nowrap " turn on line wrapping
     set formatoptions-=t
@@ -64,7 +64,7 @@ call plug#begin('~/.config/nvim/plugged')
     set showbreak=… " show ellipsis at breaking
     set autoindent " automatically set indent of new line
     set ttyfast " faster redrawing
-    set diffopt+=vertical,iwhite,internal,algorithm:patience,hiddenoff
+    " set diffopt+=vertical,iwhite,internal,algorithm:patience,hiddenoff
     set laststatus=2 " show the status line all the time
     set so=7 " set 7 lines to the cursors - when moving vertical
     set wildmenu " enhanced command line completion
@@ -97,7 +97,7 @@ call plug#begin('~/.config/nvim/plugged')
     set foldlevel=1
 
     " toggle invisible characters
-    set list
+    " set list
     set listchars=tab:→\ ,eol:¬,trail:⋅,extends:❯,precedes:❮
     set showbreak=↪
 
@@ -135,6 +135,8 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'dylanaraps/wal'
     Plug 'heraldofsolace/nisha-vim'
     Plug 'yuttie/hydrangea-vim'
+    Plug 'morhetz/gruvbox'
+    Plug 'overcache/NeoSolarized'
 
     " LightLine {{{
         Plug 'itchyny/lightline.vim'
@@ -213,9 +215,12 @@ call plug#begin('~/.config/nvim/plugged')
             \ 'component': {
             \   'readonly': '%{&readonly?"":""}',
             \ },
-            \   'separator': { 'left': '', 'right': '' },
-            \   'subseparator': { 'left': '', 'right': '' }
+            \   'separator': { 'left': '', 'right': '' },
+            \   'subseparator': { 'left': '', 'right': '' }
         \ }
+
+        " \   'separator': { 'left': '', 'right': '' },
+        " \   'subseparator': { 'left': '', 'right': '' }
     " }}}
 " }}}
 
@@ -537,11 +542,32 @@ call plug#begin('~/.config/nvim/plugged')
             \ call fzf#vim#files(<q-args>, fzf#vim#with_preview('right:50%', '?'), <bang>0)
         command! -bang -nargs=? -complete=dir GitFiles
             \ call fzf#vim#gitfiles(<q-args>, fzf#vim#with_preview('right:50%', '?'), <bang>0)
+
+        " Customize fzf colors to match your color scheme                                          
+        " - fzf#wrap translates this to a set of `--color` options                                 
+        let g:fzf_colors =
+        \ { 'fg':      ['fg', 'Normal'],                                                           
+          \ 'bg':      ['bg', 'Normal'],                                                           
+          \ 'hl':      ['fg', 'Comment'],                                                          
+          \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],                             
+          \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],                                       
+          \ 'hl+':     ['fg', 'Statement'],                                                        
+          \ 'info':    ['fg', 'PreProc'],                                                          
+          \ 'border':  ['fg', 'Ignore'],                                                           
+          \ 'prompt':  ['fg', 'Conditional'],                                                      
+          \ 'pointer': ['fg', 'Exception'],                                                        
+          \ 'marker':  ['fg', 'Keyword'],                                                          
+          \ 'spinner': ['fg', 'Label'],                                                            
+          \ 'header':  ['fg', 'Comment'] } 
     " }}}
 
     " vim-fugitive {{{
         Plug 'tpope/vim-fugitive'
-        nmap <silent> <leader>gs :Gstatus<cr>
+        nmap <silent><leader>gs :Gstatus<cr>
+        nmap <silent><leader>gw :Gwrite<cr>
+        nmap <silent><leader>gc :Gcommit<cr>
+        nnoremap <Leader>gh :Gpush<SPACE>
+        nnoremap <Leader>gl :Gpull<SPACE>
         nmap <leader>ge :Gedit<cr>
         nmap <silent><leader>gr :Gread<cr>
         nmap <silent><leader>gb :Gblame<cr>
@@ -687,15 +713,15 @@ call plug#begin('~/.config/nvim/plugged')
         Plug 'tpope/vim-liquid'
     " }}}
 
-    " JavaScript {{{
-        Plug 'othree/yajs.vim', { 'for': [ 'javascript', 'javascript.jsx', 'html' ] }
-        " Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'javascript.jsx', 'html'] }
-        Plug 'moll/vim-node', { 'for': 'javascript' }
-        Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'javascript.jsx'], 'do': 'npm install' }
-        Plug 'MaxMEllon/vim-jsx-pretty'
-        let g:vim_jsx_pretty_highlight_close_tag = 1
-        Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
-    " }}}
+    " " JavaScript {{{
+    "     Plug 'othree/yajs.vim', { 'for': [ 'javascript', 'javascript.jsx', 'html' ] }
+    "     " Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'javascript.jsx', 'html'] }
+    "     Plug 'moll/vim-node', { 'for': 'javascript' }
+    "     Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'javascript.jsx'], 'do': 'npm install' }
+    "     Plug 'MaxMEllon/vim-jsx-pretty'
+    "     let g:vim_jsx_pretty_highlight_close_tag = 1
+    "     Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
+    " " }}}
 
     " TypeScript {{{
         Plug 'leafgarland/typescript-vim', { 'for': ['typescript', 'typescript.tsx'] }
@@ -753,12 +779,13 @@ call plug#end()
         " let g:onedark_termcolors=16
         " let g:onedark_terminal_italics=1
         " colorscheme onedark
-        " colorscheme eldar
-        " colorscheme horizon
-        " colorscheme challenger_deep
-        " colorscheme quantum
-        colorscheme wal
+        " alacritty not need termguicolors=16
+        " let g:gruvbox_termcolors=16
+        " set background=dark
+        " colorscheme gruvbox
+        colorscheme Hydrangea
     endif
+
     syntax on
     filetype plugin indent on
     " make the highlighting of tabs and other non-text less annoying
@@ -782,6 +809,13 @@ call plug#end()
     " Plug 'damonkelley/django.vim'
     Plug 'vim-python/python-syntax'
     let g:python_highlight_all = 1
+
+    function! VimDjangoCompletion()
+        let matches = matchlist(getline('.'), '{%\s\+\(block\|if\|for\)')
+        return empty(matches) ? "%}" : "%}\n{% end" . matches[1] . " %}\<ESC>O"
+    endfunction
+
+    inoremap <buffer> %} <C-R>=VimDjangoCompletion()<CR>
 " }}}
 
 " Kleber {{{
@@ -795,6 +829,7 @@ call plug#end()
     Plug 'majutsushi/tagbar'
     nmap <leader>j :TagbarToggle<CR>
 
+    autocmd BufRead,BufNewFile *.html setlocal filetype=htmldjango
     nmap <leader>hd :set filetype=htmldjango<cr>
     nmap <leader>ht :set filetype=html<cr>
 
@@ -830,28 +865,47 @@ call plug#end()
         hi! Normal guibg=none ctermbg=none
         hi! NonText guibg=none ctermbg=none
         hi! LineNr guibg=none ctermbg=none
-        hi! DiffAdd guibg=none
-        hi! DiffDelete guibg=none
-        hi! DiffChange guibg=none
-        hi! DiffText guibg=none
-        hi! SignColumn guibg=none
         hi! CursorLineNr guibg=none ctermbg=none
+        hi! SignColumn guibg=none
+
+        " " Gruvbox
+        " hi! clear DiffAdd
+        " hi! DiffAdd guifg=#b8bb26
+        " hi! clear DiffDelete
+        " hi! DiffDelete guifg=#fb4934
+        " hi! clear DiffChange
+        " hi! DiffChange guifg=#8ec07c
+        " hi! clear DiffText
+        " hi! DiffText guifg=#928374
+        
+        " Hydrangea
+        hi! clear DiffAdd
+        hi! DiffAdd guifg=#36c2c2
+        hi! clear DiffDelete
+        hi! DiffDelete guifg=#e91e63
+        hi! clear DiffChange
+        hi! DiffChange guifg=#537dd5
+        hi! clear DiffText
+        hi! DiffText guifg=#1e222c
+
+        " ┃
+
         " hi! Pmenu guibg=#1c1b22
         " hi! Pmenu guibg=#1d2021
         " hi! Pmenu ctermfg=3 ctermbg=0 guibg=0
 
         " hi! CursorLine guibg=#7cc844 guifg=black
         " hi! CursorColumn guibg=#7cc844 guifg=black
-        "
+        
         " hi! CursorLine guibg=green guifg=black
         " hi! CursorColumn guibg=red guifg=black
-        " hi! Search guibg=yellow guifg=black
-        "
+        " hi! Search guibg=yellow guifg=bchangedSignlack
+        
         " hi! CursorLine guibg=#95ffa4 guifg=black
         " hi! CursorColumn guibg=#906cff guifg=black
         " hi! Search guibg=#ffe9aa guifg=black
     " }}}
-
+    
     " " Custom color to wal {{{
     "     " Make custom highlights after declaring other colors, they might override
     "     hi CursorColumn ctermbg=4 ctermfg=7 guibg=4
